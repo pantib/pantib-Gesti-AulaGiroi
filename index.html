@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ca" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escola Giroi • AulaViva - Gestió d'Aula Inclusiva (La Garriga)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            coral: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              500: '#f43f5e',
+              600: '#e11d48',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            },
+            sky: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Favicon oficial Escola Giroi -->
+  <link rel="icon" type="image/png" href="logo-giroi.png">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Suavitat de transicions i estils addicionals */
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    
+    /* Millores per a scrollbars agradables */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Estil per a taula enganxosa */
+    .sticky-col-first {
+      position: sticky;
+      left: 0;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased selection:bg-brand-200 selection:text-brand-900">
+
+  <!-- =============================== -->
+  <!-- BARRA SUPERIOR (HEADER)        -->
+  <!-- =============================== -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+        
+        <!-- Logo i Títol Oficial Escola Giroi -->
+        <div class="flex items-center gap-3">
+          <div class="h-11 w-11 rounded-xl bg-white border border-slate-200/80 p-1 flex items-center justify-center shadow-sm shrink-0">
+            <img src="logo-giroi.png" alt="Logotip Oficial de l'Escola Giroi" class="max-h-full max-w-full object-contain">
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-extrabold text-slate-800 tracking-tight">Escola Giroi</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">La Garriga</span>
+            </div>
+            <p class="text-xs text-slate-500 hidden md:block">Quadern pedagògic inclusiu • Educació Primària</p>
+          </div>
+        </div>
+
+        <!-- Selector de Grup Classe i Estat Local -->
+        <div class="flex items-center gap-3">
+          <!-- Selector de grup -->
+          <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+            <span class="text-xs font-semibold text-slate-500 pl-2 hidden sm:inline flex items-center gap-1">
+              <i data-lucide="users" class="w-3.5 h-3.5 text-slate-400"></i>
+              Grup:
+            </span>
+            <select id="group-select" class="bg-white text-sm font-semibold text-slate-800 py-1 px-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer shadow-sm">
+              <!-- Opcions dinàmiques -->
+            </select>
+            <button id="btn-manage-groups" title="Gestionar grups classe" class="p-1.5 text-slate-500 hover:text-brand-700 hover:bg-white rounded-lg transition-colors">
+              <i data-lucide="settings-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Indicador de Privadesa i Seguretat -->
+          <div class="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-medium">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span>Dades 100% locals (Sense servidors)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navegació de pestanyes -->
+      <nav class="flex space-x-1 sm:space-x-3 overflow-x-auto py-2 -mb-px text-sm font-medium no-scrollbar border-t border-slate-100" id="main-tabs">
+        <button data-tab="tab-dashboard" class="tab-btn active flex items-center gap-2 px-3 py-2 rounded-lg text-brand-700 bg-brand-50 font-semibold whitespace-nowrap transition-colors">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Tauler d'inici</span>
+        </button>
+        <button data-tab="tab-attendance" class="tab-btn flex items-center gap-2 px-3 py-2 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-slate-100 whitespace-nowrap transition-colors">
+          <i data-lucide="calendar-check" class="w-4 h-4"></i>
+          <span>Passar llista</span>
+        </button>
+        <button data-tab="tab-students" class="tab-btn flex items-center gap-2 px-3 py-2 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-slate-100 whitespace-nowrap transition-colors">
+          <i data-lucide="user-check" class="w-4 h-4"></i>
+          <span>Fitxes de l'alumnat</span>
+        </button>
+        <button data-tab="tab-gradebook" class="tab-btn flex items-center gap-2 px-3 py-2 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-slate-100 whitespace-nowrap transition-colors">
+          <i data-lucide="book-open-check" class="w-4 h-4"></i>
+          <span>Quadern d'avaluació</span>
+        </button>
+        <button data-tab="tab-backup" class="tab-btn flex items-center gap-2 px-3 py-2 rounded-lg text-slate-600 hover:text-brand-700 hover:bg-slate-100 whitespace-nowrap transition-colors">
+          <i data-lucide="database-backup" class="w-4 h-4"></i>
+          <span>Còpies i dades</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =============================== -->
+  <!-- CONTINGUT PRINCIPAL            -->
+  <!-- =============================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- PESTANYA 1: TAULER D'INICI (DASHBOARD) -->
+    <section id="tab-dashboard" class="tab-content space-y-6">
+      <!-- Targeta de benvinguda inclusiva Escola Giroi -->
+      <div class="relative overflow-hidden bg-gradient-to-r from-emerald-800 via-emerald-700 to-sky-800 rounded-3xl p-6 sm:p-8 text-white shadow-lg">
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium mb-3">
+              <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
+              Escola Giroi • La Garriga (Vallès Oriental)
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Benvinguda a l'aula, equip docent del Giroi!</h1>
+            <p class="mt-2 text-emerald-100 text-sm sm:text-base leading-relaxed">
+              Aquest és el teu entorn segur per acompanyar l'aprenentatge del grup <strong id="dash-group-name" class="underline decoration-emerald-300 underline-offset-2">4t A de Primària - Escola Giroi</strong>. Respectuós amb el projecte educatiu d'escola activa, coeducadora i connectada amb l'entorn natural de la Garriga.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <button onclick="switchTab('tab-attendance')" class="inline-flex items-center gap-2 bg-white text-emerald-900 font-semibold px-4 py-2.5 rounded-xl shadow-sm hover:bg-emerald-50 transition-all text-sm">
+                <i data-lucide="calendar-check" class="w-4 h-4 text-emerald-600"></i>
+                Passar llista d'avui
+              </button>
+              <button onclick="switchTab('tab-gradebook')" class="inline-flex items-center gap-2 bg-emerald-900/60 hover:bg-emerald-900/80 text-white font-medium px-4 py-2.5 rounded-xl transition-all text-sm border border-white/20">
+                <i data-lucide="award" class="w-4 h-4"></i>
+                Quadern d'avaluació formativa
+              </button>
+              <button onclick="openImportStudentsCsvModal()" class="inline-flex items-center gap-2 bg-emerald-900/60 hover:bg-emerald-900/80 text-emerald-100 font-medium px-4 py-2.5 rounded-xl transition-all text-sm border border-white/20">
+                <i data-lucide="file-up" class="w-4 h-4"></i>
+                Importar alumnat CSV
+              </button>
+            </div>
+          </div>
+          <!-- Imatge del logotip oficial a la targeta -->
+          <div class="hidden sm:flex shrink-0 w-28 h-28 rounded-3xl bg-white/95 p-3.5 shadow-xl backdrop-blur-md items-center justify-center border border-white/40">
+            <img src="logo-giroi.png" alt="Logotip Oficial de l'Escola Giroi" class="max-h-full max-w-full object-contain">
+          </div>
+        </div>
+        <!-- Decoració suau de fons -->
+        <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+      </div>
+
+      <!-- Resum numèric ràpid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Targeta 1: Total Alumnat -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Alumnat</p>
+            <h3 id="stat-total-students" class="text-3xl font-extrabold text-slate-800 mt-1">0</h3>
+            <p class="text-xs text-slate-500 mt-1">Registrats al grup actual</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+            <i data-lucide="users" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <!-- Targeta 2: Assistència d'Avui -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Assistència d'Avui</p>
+            <h3 id="stat-today-attendance" class="text-3xl font-extrabold text-brand-600 mt-1">--%</h3>
+            <p id="stat-today-detail" class="text-xs text-slate-500 mt-1">Pendent de passar llista</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <!-- Targeta 3: Suports Educatius -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Suports a la inclusió</p>
+            <h3 id="stat-adaptations-count" class="text-3xl font-extrabold text-amber-600 mt-1">0</h3>
+            <p class="text-xs text-slate-500 mt-1">PI, suport lingüístic o NEE</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <!-- Targeta 4: Activitats Avaluades -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Activitats al quadern</p>
+            <h3 id="stat-activities-count" class="text-3xl font-extrabold text-indigo-600 mt-1">0</h3>
+            <p class="text-xs text-slate-500 mt-1">Criteris o tasques avaluades</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <i data-lucide="folder-kanban" class="w-6 h-6"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secció d'Accés Ràpid i Resum d'Assistència Recenta -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Panell esquerre: Estat ràpid d'assistència -->
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="trending-up" class="w-4 h-4 text-brand-600"></i>
+                Evolució recent de l'assistència
+              </h2>
+              <p class="text-xs text-slate-500">Últims dies registrats per a aquest grup</p>
+            </div>
+            <button onclick="switchTab('tab-attendance')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center gap-1">
+              Veure detall <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+          <div id="dashboard-attendance-history" class="space-y-3">
+            <!-- Es renderitza dinàmicament -->
+          </div>
+        </div>
+
+        <!-- Panell dret: Recordatoris i bones pràctiques d'inclusió -->
+        <div class="bg-gradient-to-br from-slate-50 to-brand-50/40 rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center mb-3">
+              <i data-lucide="lightbulb" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-800">Criteris d'aula inclusiva</h3>
+            <ul class="mt-3 space-y-2.5 text-xs text-slate-600">
+              <li class="flex items-start gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                <span><strong>Privadesa garantida:</strong> Utilitza codis o pseudònims per complir amb el principi de minimització de dades.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                <span><strong>Avaluació formativa:</strong> Combina qualificacions qualitatives per valorar el procés i l'esforç continuat.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                <span><strong>Còpies regulars:</strong> Descarrega periòdicament una còpia de seguretat en format JSON des de la pestanya de còpies.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-200/80">
+            <button onclick="openNewStudentModal()" class="w-full inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-medium py-2 px-3 rounded-xl text-xs transition-colors shadow-sm">
+              <i data-lucide="user-plus" class="w-4 h-4"></i>
+              Afegir nova fitxa d'alumnat
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PESTANYA 2: PASSAR LLISTA (CONTROL D'ASSISTÈNCIA) -->
+    <section id="tab-attendance" class="tab-content hidden space-y-6">
+      
+      <!-- Barra superior d'eines d'assistència -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        
+        <!-- Selector de data -->
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-slate-500 flex items-center gap-1">
+              <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i>
+              Data:
+            </span>
+            <input type="date" id="attendance-date-input" class="bg-slate-50 text-slate-800 text-sm font-semibold px-3 py-1.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <button id="btn-attendance-today" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
+            Avui
+          </button>
+          <div class="text-xs text-slate-500 font-medium pl-1" id="attendance-day-label">
+            <!-- p. ex.: Dilluns, 17 de novembre de 2026 -->
+          </div>
+        </div>
+
+        <!-- Botó d'acció ràpida: Marcar tothom present -->
+        <div class="flex items-center gap-2">
+          <button id="btn-mark-all-present" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition-all">
+            <i data-lucide="check-check" class="w-4 h-4"></i>
+            Marcar tothom present
+          </button>
+          <button id="btn-export-attendance-csv" class="p-2 text-slate-600 hover:text-brand-700 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors" title="Exportar resum d'assistència a CSV">
+            <i data-lucide="download" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Comptador visual de l'assistència del dia -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+          <span class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-brand-600"></i>
+            Resum d'assistència del dia seleccionat
+          </span>
+          <span id="attendance-summary-percent" class="text-sm font-extrabold text-brand-700">0% Present</span>
+        </div>
+        <!-- Barra gràfica segmentada -->
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex" id="attendance-progress-bar">
+          <div id="bar-present" class="bg-emerald-500 h-full transition-all duration-300" style="width: 0%" title="Presents"></div>
+          <div id="bar-retard" class="bg-amber-500 h-full transition-all duration-300" style="width: 0%" title="Retards"></div>
+          <div id="bar-justificat" class="bg-sky-500 h-full transition-all duration-300" style="width: 0%" title="Justificats"></div>
+          <div id="bar-absent" class="bg-rose-500 h-full transition-all duration-300" style="width: 0%" title="Absents"></div>
+        </div>
+        <!-- Llegenda i recompte -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 text-xs font-medium">
+          <div class="flex items-center gap-2 text-slate-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-100">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span>Present:</span>
+            <strong id="count-present" class="ml-auto text-emerald-800">0</strong>
+          </div>
+          <div class="flex items-center gap-2 text-slate-700 bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-100">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+            <span>Retard:</span>
+            <strong id="count-retard" class="ml-auto text-amber-800">0</strong>
+          </div>
+          <div class="flex items-center gap-2 text-slate-700 bg-sky-50 px-2.5 py-1.5 rounded-lg border border-sky-100">
+            <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+            <span>Justificat:</span>
+            <strong id="count-justificat" class="ml-auto text-sky-800">0</strong>
+          </div>
+          <div class="flex items-center gap-2 text-slate-700 bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-100">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+            <span>Absent:</span>
+            <strong id="count-absent" class="ml-auto text-rose-800">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Llistat de l'alumnat per passar llista -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-700">Llistat del grup classe</h3>
+          <span class="text-xs text-slate-500">Prem directament sobre l'estat per canviar-lo</span>
+        </div>
+
+        <div id="attendance-list-container" class="divide-y divide-slate-100">
+          <!-- Renderitzat via JavaScript -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PESTANYA 3: FITXES DE L'ALUMNAT -->
+    <section id="tab-students" class="tab-content hidden space-y-6">
+      
+      <!-- Barra superior de cerca i filtre -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        
+        <div class="flex flex-1 items-center gap-3 max-w-md">
+          <div class="relative w-full">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="search-student-input" placeholder="Cerca per nom, codi o adaptació..." class="w-full bg-slate-50 text-slate-800 text-sm pl-9 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="filter-adaptation-select" class="bg-slate-50 text-xs font-medium text-slate-700 py-2 px-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="all">Tots els suports</option>
+            <option value="with-adaptations">Amb suports educatius</option>
+            <option value="without-adaptations">Sense suports registrats</option>
+          </select>
+          <button onclick="openImportStudentsCsvModal()" class="inline-flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-sm transition-all whitespace-nowrap" title="Importar alumnat de manera massiva mitjançant un fitxer CSV">
+            <i data-lucide="file-up" class="w-4 h-4 text-emerald-700"></i>
+            Importar alumnat (CSV)
+          </button>
+          <button onclick="openNewStudentModal()" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all whitespace-nowrap">
+            <i data-lucide="user-plus" class="w-4 h-4"></i>
+            Afegir alumnat
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Graella de fitxes d'alumnat -->
+      <div id="students-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Renderitzat per JS -->
+      </div>
+
+    </section>
+
+    <!-- PESTANYA 4: QUADERN DE NOTES I AVALUACIÓ CONTÍNUA -->
+    <section id="tab-gradebook" class="tab-content hidden space-y-6">
+      
+      <!-- Barra superior d'introducció i normativa -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="book-open" class="w-4 h-4 text-brand-600"></i>
+              Quadern d'avaluació formativa
+            </h2>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-50 text-sky-800 border border-sky-200">
+              Decret 175/2022 • Generalitat de Catalunya
+            </span>
+          </div>
+          <p class="text-xs text-slate-500">
+            Avaluació per matèries, trimestres i vinculada als sabers bàsics del currículum d'educació primària.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openAddEvaluationColumnModal()" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-sm transition-all whitespace-nowrap">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            Afegir activitat / criteri
+          </button>
+          <button id="btn-export-grades-csv" class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3.5 py-2.5 rounded-xl transition-all border border-slate-200">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Exportar CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Subpàgines: Selector de Matèria / Àmbit Curricular -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-2 shadow-sm">
+        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 pt-2 pb-1">
+          Àmbit / Matèria curricular:
+        </div>
+        <div id="subject-tabs-container" class="flex gap-1.5 overflow-x-auto pb-1 px-1 no-scrollbar">
+          <!-- Generat dinàmicament per JS amb cada matèria -->
+        </div>
+      </div>
+
+      <!-- Selector de Trimestre i Informació Curricular -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-4">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <!-- Selector de trimestres -->
+          <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl self-start sm:self-center" id="trimester-tabs-container">
+            <button data-trimester="t1" class="trimester-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-brand-700 shadow-sm">
+              1r Trimestre
+            </button>
+            <button data-trimester="t2" class="trimester-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-brand-700 hover:bg-white/60 transition-all">
+              2n Trimestre
+            </button>
+            <button data-trimester="t3" class="trimester-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-brand-700 hover:bg-white/60 transition-all">
+              3r Trimestre
+            </button>
+            <button data-trimester="annual" class="trimester-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-brand-700 hover:bg-white/60 transition-all flex items-center gap-1">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+              Resum Anual
+            </button>
+          </div>
+
+          <!-- Botó per mostrar sabers curriculars -->
+          <button id="btn-toggle-sabers" class="text-xs text-brand-700 hover:text-brand-800 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-xl border border-brand-200 transition-colors flex items-center gap-1.5 self-start">
+            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+            <span id="sabers-toggle-text">Veure sabers del currículum de la matèria</span>
+          </button>
+        </div>
+
+        <!-- Panell desplegable de Sabers del Currículum de la Generalitat -->
+        <div id="subject-sabers-panel" class="hidden bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-2">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <h4 id="curriculum-subject-title" class="text-xs font-bold text-slate-800">Sabers bàsics curriculars</h4>
+              <p id="curriculum-subject-desc" class="text-[11px] text-slate-500 mt-0.5">Segons el Decret 175/2022 d'educació primària</p>
+            </div>
+            <span class="text-[10px] font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+              Departament d'Educació
+            </span>
+          </div>
+          <div id="curriculum-sabers-list" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-2">
+            <!-- Es renderitzen els sabers de la matèria -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Taula dinàmica del quadern -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto max-h-[600px] relative">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-slate-100 text-slate-700 uppercase tracking-wider font-semibold sticky top-0 z-20 shadow-sm">
+              <tr id="gradebook-table-header">
+                <!-- Capçaleres dinàmiques: Alumnat, Columnes d'activitats amb Sabers, Mitjana -->
+              </tr>
+            </thead>
+            <tbody id="gradebook-table-body" class="divide-y divide-slate-100">
+              <!-- Files generades dinàmicament per JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="p-3 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-medium">Escala competencial:</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-semibold">AE (Excel·lent)</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-semibold">AN (Notable)</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">AS (Satisfactori)</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-semibold">NA (Necessita millorar)</span>
+          </div>
+          <div>
+            <span class="font-medium">Escala numèrica:</span> 1 al 10 (càlcul automàtic de la mitjana ponderada)
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PESTANYA 5: CÒPIES DE SEGURETAT I DADES -->
+    <section id="tab-backup" class="tab-content hidden space-y-6">
+      
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+            <i data-lucide="shield" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold text-slate-800">Privadesa i sobirania de dades docents</h2>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+              Totes les teves dades (fitxes d'alumnat, assistències, observacions i notes) es desen al <code>localStorage</code> del teu navegador web. No hi ha servidors centrals, ni rastrejadors, ni intermediaris. Per això, pots descarregar còpies de seguretat completes o traslladar-les a un altre dispositiu en qualsevol moment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Targeta: Exportació completa JSON -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center mb-3">
+              <i data-lucide="file-json" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800">Exportar còpia de seguretat (JSON)</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Descarrega un fitxer complet amb tots els grups, alumnat, registres d'assistència i notes. Ideal per guardar al teu disc dur o canviar d'ordinador/tauleta.
+            </p>
+          </div>
+          <button id="btn-export-json" class="mt-6 inline-flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Descarregar còpia completa (.json)
+          </button>
+        </div>
+
+        <!-- Targeta: Importació JSON -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
+              <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800">Restaurar còpia de seguretat (JSON)</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Selecciona un fitxer .json descarregat prèviament per restaurar tota la informació d'aula en aquest navegador.
+            </p>
+          </div>
+          <div class="mt-6">
+            <label for="input-import-json" class="inline-flex w-full items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all cursor-pointer">
+              <i data-lucide="upload" class="w-4 h-4"></i>
+              Seleccionar fitxer JSON per restaurar
+            </label>
+            <input type="file" id="input-import-json" accept=".json" class="hidden">
+          </div>
+        </div>
+
+        <!-- Targeta: Importació massiva d'alumnat CSV -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+              <i data-lucide="file-up" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800">Importació massiva d'alumnat (CSV)</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Afegeix de cop tot el llistat de l'alumnat del grup classe a través d'un fitxer CSV (amb identificador, suports educatius i observacions). Descarrega la plantilla d'exemple llesta per a l'ús.
+            </p>
+          </div>
+          <div class="mt-6">
+            <button onclick="openImportStudentsCsvModal()" class="inline-flex w-full items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all">
+              <i data-lucide="file-plus" class="w-4 h-4"></i>
+              Obrir assistent d'importació CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Targeta: Exportació a CSV / Fulls de càlcul -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+              <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800">Exportar a full de càlcul (CSV / Excel)</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Genera fitxers CSV compatibles amb LibreOffice Calc, Microsoft Excel o Google Sheets amb caràcters UTF-8 per al grup actual.
+            </p>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <button id="btn-export-grades-csv-2" class="flex-1 inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-2.5 px-3 rounded-xl border border-slate-200 transition-all">
+              <i data-lucide="table" class="w-4 h-4 text-emerald-600"></i>
+              Quadern de notes (CSV)
+            </button>
+            <button id="btn-export-attendance-csv-2" class="flex-1 inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-2.5 px-3 rounded-xl border border-slate-200 transition-all">
+              <i data-lucide="calendar" class="w-4 h-4 text-sky-600"></i>
+              Assistència (CSV)
+            </button>
+          </div>
+        </div>
+
+        <!-- Targeta: Gestió de memòria i reinici -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
+              <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-800">Carregar dades de demostració</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Vols explorar com funciona l'aplicació amb exemples? Pots carregar dades d'exemple del grup de 4t de Primària amb alumnat, notes i assistències fictícies.
+            </p>
+          </div>
+          <div class="mt-6 flex gap-2">
+            <button id="btn-reset-demo" class="flex-1 inline-flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-semibold py-2.5 px-3 rounded-xl transition-all">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              Carregar exemple inicial
+            </button>
+            <button id="btn-clear-all" class="inline-flex items-center justify-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold py-2.5 px-3 rounded-xl transition-all" title="Esborrar totes les dades del navegador">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+              Esborrar tot
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =============================== -->
+  <!-- MODALS I FINESTRES EMERGENTS   -->
+  <!-- =============================== -->
+
+  <!-- MODAL: FITXA INDIVIDUAL DE L'ALUMNAT (DETALL I EDICIÓ) -->
+  <div id="modal-student-detail" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Capçalera del modal -->
+      <div class="p-6 bg-gradient-to-r from-brand-600 to-sky-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div id="modal-student-avatar" class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-lg font-extrabold text-white shadow-sm">
+            01
+          </div>
+          <div>
+            <h3 id="modal-student-name" class="text-xl font-bold">Alumnat 01</h3>
+            <p id="modal-student-subtitle" class="text-xs text-brand-100">Grup: 4t A de Primària</p>
+          </div>
+        </div>
+        <button onclick="closeStudentModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Cos del modal amb scroll -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1">
+        
+        <!-- Resum automàtic: Assistència i Mitjana de qualificacions -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-emerald-50 border border-emerald-200/60 p-4 rounded-2xl flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0">
+              <i data-lucide="calendar-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-emerald-800">Assistència global</p>
+              <h4 id="modal-student-attendance-stat" class="text-xl font-extrabold text-emerald-900">0%</h4>
+              <p id="modal-student-attendance-sub" class="text-[11px] text-emerald-700">0 dies registrats</p>
+            </div>
+          </div>
+
+          <div class="bg-sky-50 border border-sky-200/60 p-4 rounded-2xl flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shrink-0">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-sky-800">Mitjana qualificacions</p>
+              <h4 id="modal-student-grade-stat" class="text-xl font-extrabold text-sky-900">--</h4>
+              <p id="modal-student-grade-sub" class="text-[11px] text-sky-700">0 activitats puntuades</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulari d'edició de dades -->
+        <form id="form-student-detail" class="space-y-4">
+          <input type="hidden" id="edit-student-id">
+          
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+              Identificador o pseudònim de l'alumnat
+            </label>
+            <input type="text" id="edit-student-code" required placeholder="Ex: Alumnat 01 o M.G." class="w-full bg-slate-50 text-slate-800 text-sm px-3.5 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <p class="text-[11px] text-slate-500 mt-1">Recomanat: codis genèrics per garantir la màxima privadesa de l'infant.</p>
+          </div>
+
+          <!-- Suports educatius o adaptacions -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+              Suports educatius o adaptacions
+            </label>
+            <div id="adaptations-tags-container" class="flex flex-wrap gap-1.5 mb-2">
+              <!-- Etiquetes actives -->
+            </div>
+            
+            <div class="flex gap-2">
+              <input type="text" id="new-adaptation-input" placeholder="Afegir suport (ex: Pla Individualitzat, Suport lingüístic...)" class="flex-1 bg-slate-50 text-slate-800 text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <button type="button" id="btn-add-adaptation-tag" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold px-3 py-2 rounded-xl transition-colors">
+                Afegir
+              </button>
+            </div>
+            
+            <!-- Suggeriments ràpids de suports -->
+            <div class="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500">
+              <span>Suggeriments ràpids:</span>
+              <button type="button" onclick="addQuickAdaptation('Pla Individualitzat (PI)')" class="px-2 py-0.5 rounded-full bg-slate-100 hover:bg-brand-100 hover:text-brand-800 text-slate-600 transition-colors">+ PI</button>
+              <button type="button" onclick="addQuickAdaptation('Suport Lingüístic (Aula d\'Acollida)')" class="px-2 py-0.5 rounded-full bg-slate-100 hover:bg-brand-100 hover:text-brand-800 text-slate-600 transition-colors">+ Suport Lingüístic</button>
+              <button type="button" onclick="addQuickAdaptation('Altes Capacitats')" class="px-2 py-0.5 rounded-full bg-slate-100 hover:bg-brand-100 hover:text-brand-800 text-slate-600 transition-colors">+ Altes Capacitats</button>
+              <button type="button" onclick="addQuickAdaptation('Reforç de Lectoescriptura')" class="px-2 py-0.5 rounded-full bg-slate-100 hover:bg-brand-100 hover:text-brand-800 text-slate-600 transition-colors">+ Lectoescriptura</button>
+            </div>
+          </div>
+
+          <!-- Observacions pedagògiques i seguiment -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 flex items-center justify-between">
+              <span>Observacions pedagògiques i seguiment</span>
+              <span class="text-[11px] text-slate-400 font-normal">Tutories, interessos i evolució</span>
+            </label>
+            <textarea id="edit-student-notes" rows="4" placeholder="Anota aquí observacions rellevants per a l'acompanyament educatiu: motivacions personals, relació amb el grup, acords de tutoria amb les famílies..." class="w-full bg-slate-50 text-slate-800 text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+          </div>
+
+        </form>
+
+      </div>
+
+      <!-- Peu del modal -->
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <button type="button" id="btn-delete-student" class="text-rose-600 hover:text-rose-700 hover:bg-rose-50 text-xs font-semibold px-3 py-2 rounded-xl transition-colors flex items-center gap-1.5">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          Eliminar fitxa
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeStudentModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-200 transition-colors">
+            Cancel·lar
+          </button>
+          <button type="button" id="btn-save-student-detail" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all flex items-center gap-1.5">
+            <i data-lucide="save" class="w-4 h-4"></i>
+            Guardar canvis
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: GESTIONAR GRUPS CLASSE -->
+  <div id="modal-manage-groups" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+          <i data-lucide="users" class="w-4 h-4 text-brand-600"></i>
+          Grups classe
+        </h3>
+        <button onclick="closeModal('modal-manage-groups')" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <!-- Llista de grups existents -->
+        <div id="groups-list" class="space-y-2 max-h-56 overflow-y-auto">
+          <!-- Renderitzat per JS -->
+        </div>
+
+        <!-- Afegir nou grup -->
+        <div class="pt-3 border-t border-slate-100">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Crear nou grup</label>
+          <div class="flex gap-2">
+            <input type="text" id="new-group-name" placeholder="Ex: 5è B de Primària" class="flex-1 bg-slate-50 text-slate-800 text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <button id="btn-create-group" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition-colors">
+              Crear
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: AFEGIR COLUMNA D'AVALUACIÓ -->
+  <div id="modal-add-column" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-brand-600 to-sky-600 text-white">
+        <div>
+          <h3 class="text-base font-bold flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            Nova activitat o criteri d'avaluació
+          </h3>
+          <p class="text-[11px] text-brand-100 mt-0.5">Vinculada als sabers del Departament d'Educació</p>
+        </div>
+        <button onclick="closeModal('modal-add-column')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="form-add-column" class="p-6 space-y-4">
+        
+        <!-- Matèria i Trimestre -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+              Matèria curricular
+            </label>
+            <select id="new-column-subject" class="w-full bg-slate-50 text-slate-800 text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 font-semibold">
+              <!-- Opcions de matèria afegides per JS -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+              Trimestre
+            </label>
+            <select id="new-column-trimester" class="w-full bg-slate-50 text-slate-800 text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 font-semibold">
+              <option value="t1">1r Trimestre (Tardor)</option>
+              <option value="t2">2n Trimestre (Hivern)</option>
+              <option value="t3">3r Trimestre (Primavera)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Títol de l'activitat -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+            Nom de l'activitat o situació d'aprenentatge
+          </label>
+          <input type="text" id="new-column-title" required placeholder="Ex: Càlcul mental i fraccions o Lectura expressiva" class="w-full bg-slate-50 text-slate-800 text-sm px-3.5 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+        </div>
+
+        <!-- Saber bàsic del currículum de Catalunya -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 flex items-center justify-between">
+            <span>Saber bàsic (Currículum Generalitat)</span>
+            <span class="text-[10px] text-brand-700 font-normal">Decret 175/2022</span>
+          </label>
+          <select id="new-column-saber" class="w-full bg-slate-50 text-slate-800 text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <!-- Sabers omplerts automàticament segons la matèria -->
+          </select>
+          <input type="text" id="new-column-custom-saber" placeholder="Escriu un saber personalitzat si no és al llistat..." class="hidden mt-2 w-full bg-slate-50 text-slate-800 text-xs px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+        </div>
+
+        <!-- Tipus de puntuació -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+            Model d'avaluació
+          </label>
+          <select id="new-column-type" class="w-full bg-slate-50 text-slate-800 text-xs px-3.5 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="numeric">Numèrica (De l'1 al 10)</option>
+            <option value="qualitative">Qualitativa / Competencial (AE [Excel·lent] / AN [Notable] / AS [Satisfactori] / NA [Necessita millorar])</option>
+          </select>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeModal('modal-add-column')" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors">
+            Cancel·lar
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            Afegir al quadern
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORTACIÓ MASSIVA D'ALUMNAT PER CSV -->
+  <div id="modal-import-students-csv" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Capçalera del modal -->
+      <div class="p-6 bg-gradient-to-r from-emerald-800 via-emerald-700 to-sky-800 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0">
+            <i data-lucide="file-up" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold">Importació massiva d'alumnat (CSV)</h3>
+            <p class="text-xs text-emerald-100">Escola Giroi • Grup: <span id="import-csv-target-group" class="font-semibold underline">4t A de Primària</span></p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-import-students-csv')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Cos del modal amb contingut scrollable -->
+      <div class="p-6 overflow-y-auto space-y-5 flex-1">
+        
+        <!-- Pas 1: Descarregar plantilla i instruccions -->
+        <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+              <i data-lucide="info" class="w-4 h-4 text-emerald-700"></i>
+              Format compatible del fitxer CSV
+            </h4>
+            <p class="text-[11px] text-emerald-800 leading-relaxed">
+              El fitxer pot contenir columnes com: <strong class="text-emerald-950">Identificador</strong> (obligatori), <strong class="text-emerald-950">Suports Educatius</strong> i <strong class="text-emerald-950">Observacions</strong>. S'accepta separació per punt i coma (;) o coma (,).
+            </p>
+          </div>
+          <button type="button" onclick="downloadStudentCsvTemplate()" class="inline-flex items-center gap-1.5 bg-white hover:bg-emerald-100 text-emerald-800 text-xs font-bold px-3.5 py-2 rounded-xl border border-emerald-300 shadow-sm transition-all whitespace-nowrap shrink-0">
+            <i data-lucide="download" class="w-4 h-4 text-emerald-600"></i>
+            Baixar plantilla CSV
+          </button>
+        </div>
+
+        <!-- Pas 2: Selecció del fitxer CSV -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            Selecciona el fitxer CSV
+          </label>
+          <div class="relative border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-6 text-center bg-slate-50 hover:bg-emerald-50/40 transition-colors cursor-pointer" onclick="document.getElementById('input-students-csv-file').click()">
+            <input type="file" id="input-students-csv-file" accept=".csv, .txt" class="hidden">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-2">
+              <i data-lucide="upload" class="w-6 h-6"></i>
+            </div>
+            <p class="text-xs font-bold text-slate-700" id="csv-file-name-label">Fes clic per triar el fitxer CSV o arrossega'l aquí</p>
+            <p class="text-[11px] text-slate-400 mt-1">Accepta fitxers exportats des d'Excel, LibreOffice Calc o Google Sheets</p>
+          </div>
+        </div>
+
+        <!-- Mode d'importació: Afegir o Substituir -->
+        <div class="space-y-2 pt-1">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Acció sobre l'alumnat del grup</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 bg-white cursor-pointer hover:bg-slate-50 transition-colors">
+              <input type="radio" name="import-mode" value="append" checked class="text-emerald-600 focus:ring-emerald-500">
+              <div>
+                <span class="font-bold text-slate-800 block">Afegir a l'alumnat existent</span>
+                <span class="text-[11px] text-slate-500">Conserva l'alumnat actual del grup i suma els nous</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 bg-white cursor-pointer hover:bg-slate-50 transition-colors">
+              <input type="radio" name="import-mode" value="replace" class="text-emerald-600 focus:ring-emerald-500">
+              <div>
+                <span class="font-bold text-slate-800 block text-rose-700">Substituir tot el grup</span>
+                <span class="text-[11px] text-slate-500">Substitueix completament l'alumnat existent</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Previsualització en temps real de les dades detectades -->
+        <div id="csv-preview-container" class="hidden space-y-2 pt-2 border-t border-slate-200">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="eye" class="w-3.5 h-3.5 text-emerald-600"></i>
+              Previsualització del contingut
+            </span>
+            <span id="csv-preview-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800">
+              0 alumnes
+            </span>
+          </div>
+
+          <div class="border border-slate-200 rounded-xl overflow-hidden max-h-48 overflow-y-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead class="bg-slate-100 text-slate-600 uppercase font-semibold sticky top-0">
+                <tr>
+                  <th class="py-2 px-3 w-12 text-center">Núm</th>
+                  <th class="py-2 px-3">Identificador / Nom</th>
+                  <th class="py-2 px-3">Suports educatius</th>
+                  <th class="py-2 px-3">Observacions</th>
+                </tr>
+              </thead>
+              <tbody id="csv-preview-tbody" class="divide-y divide-slate-100 bg-white">
+                <!-- Generat dinàmicament per JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Peu del modal -->
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-2">
+        <button type="button" onclick="closeModal('modal-import-students-csv')" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-200 transition-colors">
+          Cancel·lar
+        </button>
+        <button type="button" id="btn-confirm-import-csv" disabled class="px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-300 text-slate-500 cursor-not-allowed transition-all flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span id="btn-confirm-import-label">Carrega un fitxer CSV</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICACIÓ -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 transition-all duration-300">
+    <div id="toast-icon" class="text-brand-400">
+      <i data-lucide="check-circle" class="w-5 h-5"></i>
+    </div>
+    <div id="toast-message" class="text-xs font-medium"></div>
+  </div>
+
+  <!-- Script d'aplicació -->
+  <script src="app.js"></script>
+</body>
+</html>
